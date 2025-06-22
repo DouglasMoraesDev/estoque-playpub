@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id        Int        @id @default(autoincrement())
+  username  String     @unique
+  password  String
+  role      Role
+  retiradas Retirada[]
+}
+
+model Produto {
+  id         Int        @id @default(autoincrement())
+  nome       String
+  quantidade Int        @default(0)
+  validade   DateTime
+  retiradas  Retirada[]
+}
+
+model Retirada {
+  id          Int         @id @default(autoincrement())
+  produtoId   Int
+  usuarioId   Int
+  quantidade  Int
+  data        DateTime    @default(now())
+  destination Destination @default(LOJA_PARK)
+  produto     Produto     @relation(fields: [produtoId], references: [id])
+  usuario     Usuario     @relation(fields: [usuarioId], references: [id])
+
+  @@index([produtoId], map: "Retirada_produtoId_fkey")
+  @@index([usuarioId], map: "Retirada_usuarioId_fkey")
+}
+
+enum Destination {
+  LOJA_PARK
+  BAR_PUB
+}
+
+enum Role {
+  ADMIN
+  EMPLOYEE
+}

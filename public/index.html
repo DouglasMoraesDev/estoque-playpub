@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login - Gerenciador de Estoque</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="container login-container">
+    <div class="logo-container">
+      <img src="/img/logo.svg" alt="Logo PlayPub" class="logo" />
+    </div>
+
+    <h1>Login</h1>
+    <div id="error-msg" class="error"></div>
+
+    <form action="/login" method="POST" class="form-login">
+      <label for="username">Usuário:</label>
+      <input type="text" id="username" name="username" required />
+
+      <label for="password">Senha:</label>
+      <input type="password" id="password" name="password" required />
+
+      <button type="submit" class="btn-primary">Entrar</button>
+    </form>
+
+    <div class="info">
+      <p>→ Se você for Funcionário, escaneie o QR Code <a href="/qrcode">clicando aqui</a> ou visite <code>/qrcode</code>.</p>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('error')) {
+      document.getElementById('error-msg').textContent = params.get('error');
+    }
+  </script>
+</body>
+</html>

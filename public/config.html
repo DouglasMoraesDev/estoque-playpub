@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Configurações – Trocar Senha</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="logo-container">
+      <img src="/img/logo.svg" alt="Logo PlayPub" class="logo" />
+    </div>
+    <header>
+      <h1>Configurações</h1>
+      <div class="header-buttons">
+        <a href="/admin" class="btn-secondary">Voltar</a>
+        <a href="/logout" class="btn-logout">Logout</a>
+      </div>
+    </header>
+
+    <section id="seccao-config">
+      <h2>Trocar Senha</h2>
+      <form id="form-trocar-senha" class="form-config">
+        <label for="current-password">Senha Atual:</label>
+        <input type="password" id="current-password" required />
+
+        <label for="new-password">Nova Senha:</label>
+        <input type="password" id="new-password" minlength="6" required />
+
+        <label for="confirm-password">Confirmar Nova Senha:</label>
+        <input type="password" id="confirm-password" minlength="6" required />
+
+        <button type="submit" class="btn-primary">Alterar Senha</button>
+      </form>
+      <div id="config-feedback" class="error"></div>
+    </section>
+  </div>
+
+  <script src="/js/config.js"></script>
+</body>
+</html>
