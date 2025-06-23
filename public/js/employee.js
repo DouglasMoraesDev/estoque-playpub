@@ -1,3 +1,4 @@
+// public/js/employee.js
 const API_BASE = '/api';
 
 const empData = JSON.parse(document.getElementById('empStockData').textContent);
@@ -74,7 +75,6 @@ formRetirar.addEventListener('submit', async e => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         productId: selectedProduct.id,
-        stockId: empStockId,
         quantity: qty,
         destination: destination
       })
@@ -113,12 +113,13 @@ function renderHistorico(lista) {
   lista.forEach(r => {
     const dt = new Date(r.data);
     const hora = dt.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    const destinoLabel = r.destination === 'LOJA_PARK' ? 'Loja Park' : 'Bar Pub';
     tabelaHistorico.innerHTML += `
       <tr>
         <td>${r.id}</td>
         <td>${r.produtoNome}</td>
         <td>${r.quantidade}</td>
-        <td>${r.destination}</td>
+        <td>${destinoLabel}</td>
         <td>${hora}</td>
       </tr>
     `;
