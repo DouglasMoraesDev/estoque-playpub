@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>Administração do Estoque</title>
   <link rel="stylesheet" href="/css/style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <div class="container">
@@ -14,149 +13,75 @@
     <header>
       <h1>Área do Gerente</h1>
       <div class="header-buttons">
+        <button id="btn-loja" class="btn-secondary">LojaPark</button>
+        <button id="btn-bar"  class="btn-secondary">BarPlaypub</button>
+        <button id="btn-historico" class="btn-secondary">Histórico</button>
+        <button id="btn-usuario"   class="btn-secondary">Cadastrar Usuário</button>
         <a href="/config" class="btn-secondary">Configurações</a>
         <a href="/logout" class="btn-logout">Logout</a>
       </div>
     </header>
 
-    <!-- SEÇÃO DE ALERTAS -->
-    <section id="seccao-alertas" style="margin-bottom: 1rem;">
-      <div id="alert-box" class="alert-box" style="display: none;">
-        <!-- O JS injetará aqui os alertas -->
-      </div>
-    </section>
-
-    <!-- BARRA DE BUSCA -->
-    <section id="seccao-busca" style="margin-bottom: 1rem;">
-      <input
-        type="text"
-        id="input-busca-produto"
-        placeholder="Buscar produto por nome..."
-        class="input-search"
-        style="width: 100%; padding: 0.5rem;"
-      />
-    </section>
-
-    <!-- FORMULÁRIO ADICIONAR / EDITAR PRODUTO -->
-    <section id="seccao-cadastro-produto">
-      <h2>Adicionar / Editar Produto</h2>
-      <div class="form-container">
-        <form id="form-add-produto" class="form-produto" style="width: 100%; max-width: 500px;">
+    <main>
+      <!-- Seção de Produto -->
+      <section id="sec-produto">
+        <h2>Produtos</h2>
+        <form id="form-add-produto" class="form-produto">
           <input type="hidden" id="produto-id" value="" />
-
-          <div class="form-group">
-            <label for="nome-produto">Nome:</label>
-            <input type="text" id="nome-produto" required />
-          </div>
-
-          <div class="form-group">
-            <label for="qtde-produto">Quantidade:</label>
-            <input type="number" id="qtde-produto" min="0" required />
-          </div>
-
-          <div class="form-group">
-            <label for="validade-produto">Validade:</label>
-            <input type="date" id="validade-produto" required />
-          </div>
-
-          <div class="form-buttons">
-            <button type="submit" id="btn-salvar-produto" class="btn-primary">Salvar</button>
-            <button type="button" id="btn-cancelar-edicao" class="btn-secondary" style="display: none;">Cancelar</button>
-          </div>
+          <div class="form-group"><label>Nome:</label><input id="nome-produto" required /></div>
+          <div class="form-group"><label>Quantidade:</label><input id="qtde-produto" type="number" min="0" required /></div>
+          <div class="form-group"><label>Validade:</label><input id="validade-produto" type="date" required /></div>
+          <div class="form-group"><label>Estoque:</label><select id="stockSelect"></select></div>
+          <div class="form-buttons"><button type="submit" class="btn-primary">Salvar</button></div>
         </form>
-      </div>
-    </section>
-
-    <!-- LISTA DE PRODUTOS -->
-    <section id="seccao-lista-produtos" style="margin-top: 2rem;">
-      <h2>Produtos Cadastrados</h2>
-      <div class="table-container tabela-produtos-container">
-        <table id="tabela-produtos">
-          <thead>
-            <tr>
-              <th class="sortable" data-col="0">ID <button class="btn-sort">&#x25B2;/&#x25BC;</button></th>
-              <th class="sortable" data-col="1">Nome <button class="btn-sort">&#x25B2;/&#x25BC;</button></th>
-              <th class="sortable" data-col="2">Qtde <button class="btn-sort">&#x25B2;/&#x25BC;</button></th>
-              <th class="sortable" data-col="3">Validade <button class="btn-sort">&#x25B2;/&#x25BC;</button></th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-      <div id="cards-produtos" class="cards-container"></div>
-    </section>
-
-    <!-- HISTÓRICO DE RETIRADAS -->
-    <section id="seccao-lista-retiradas" style="margin-top: 2rem;">
-      <h2>Histórico de Retiradas (Hoje)</h2>
-      <div class="form-produto">
-        <label for="data-inicio">Data Início:</label>
-        <input type="date" id="data-inicio" />
-        <label for="data-fim">Data Fim:</label>
-        <input type="date" id="data-fim" />
-        <button type="button" id="btn-filtrar-retiradas" class="btn-secondary">Filtrar</button>
-      </div>
-      <div class="table-container tabela-retiradas-container" style="margin-top: 1rem;">
-        <table id="tabela-retiradas">
-          <thead>
-            <tr>
-              <th class="sortable" data-col="0">ID <button class="btn-sort">&#x25B2;/&#x25BC;</button></th>
-              <th class="sortable" data-col="1">Produto <button class="btn-sort">&#x25B2;/&#x25BC;</button></th>
-              <th class="sortable" data-col="2">Qtde <button class="btn-sort">&#x25B2;/&#x25BC;</button></th>
-              <th class="sortable" data-col="3">Funcionário <button class="btn-sort">&#x25B2;/&#x25BC;</button></th>
-              <th class="sortable" data-col="4">Data <button class="btn-sort">&#x25B2;/&#x25BC;</button></th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-      <div id="cards-retiradas" class="cards-container"></div>
-    </section>
-
-    <!-- RELATÓRIO COMPLETO -->
-    <section id="seccao-relatorio-completo" style="margin-top: 2rem;">
-      <h2>Relatório Completo</h2>
-      <div class="subsecao">
-        <h3>Estoque Atual</h3>
-        <div class="table-container tabela-relatorio-estoque">
-          <table id="tabela-relatorio-estoque">
+        <div class="table-container" style="margin-top:2rem;">
+          <table id="tabela-produtos">
             <thead>
-              <tr>
-                <th class="sortable" data-col="0">ID <button class="btn-sort">&#x25B2;/&#x25BC;</button></th>
-                <th class="sortable" data-col="1">Nome <button class="btn-sort">&#x25B2;/&#x25BC;</button></th>
-                <th class="sortable" data-col="2">Qtde <button class="btn-sort">&#x25B2;/&#x25BC;</button></th>
-                <th class="sortable" data-col="3">Validade <button class="btn-sort">&#x25B2;/&#x25BC;</button></th>
-              </tr>
+              <tr><th>ID</th><th>Nome</th><th>Qtde</th><th>Validade</th><th>Ações</th></tr>
             </thead>
             <tbody></tbody>
           </table>
         </div>
-      </div>
-      <div class="subsecao" style="margin-top: 1rem;">
-        <h3>Retiradas Registradas</h3>
-        <div class="table-container tabela-relatorio-retiradas">
-          <table id="tabela-relatorio-retiradas">
+      </section>
+
+      <!-- Seção de Histórico -->
+      <section id="sec-historico" style="display:none;">
+        <h2>Histórico de Retiradas</h2>
+        <div class="form-group">
+          <label>Data Início:</label><input id="data-inicio" type="date" />
+          <label>Data Fim:</label><input id="data-fim" type="date" />
+          <label>Estoque:</label><select id="hist-stock-select"></select>
+          <button id="btn-gera-rel" class="btn-secondary">Ver Relatório</button>
+          <button id="btn-pdf" class="btn-primary">Gerar PDF</button>
+        </div>
+        <div class="table-container">
+          <table id="tabela-historico">
             <thead>
-              <tr>
-                <th class="sortable" data-col="0">ID <button class="btn-sort">&#x25B2;/&#x25BC;</button></th>
-                <th class="sortable" data-col="1">Produto <button class="btn-sort">&#x25B2;/&#x25BC;</button></th>
-                <th class="sortable" data-col="2">Qtde <button class="btn-sort">&#x25B2;/&#x25BC;</button></th>
-                <th class="sortable" data-col="3">Funcionário <button class="btn-sort">&#x25B2;/&#x25BC;</button></th>
-                <th class="sortable" data-col="4">Data <button class="btn-sort">&#x25B2;/&#x25BC;</button></th>
-              </tr>
+              <tr><th>ID</th><th>Produto</th><th>Qtde</th><th>Funcionário</th><th>Data</th></tr>
             </thead>
             <tbody></tbody>
           </table>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- GRÁFICO DE PRODUTOS MAIS RETIRADOS -->
-    <section id="seccao-grafico-mais-retirados" style="margin-top: 2rem;">
-      <h2>Gráfico: Produtos mais Retirados</h2>
-      <canvas id="chart-mais-retirados" class="chart-canvas"></canvas>
-    </section>
+      <!-- Seção de Cadastro de Usuário -->
+      <section id="sec-usuario" style="display:none;">
+        <h2>Cadastrar Usuário</h2>
+        <form id="form-add-usuario" class="form-produto">
+          <div class="form-group"><label>Username:</label><input name="username" required /></div>
+          <div class="form-group"><label>Senha:</label><input name="password" type="password" required /></div>
+          <div class="form-group">
+            <label>Role:</label>
+            <select name="role">
+              <option value="EMPLOYEE">Funcionário</option>
+              <option value="ADMIN">Admin</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Estoque:</label><select name="stockId" id="userStockSelect"></select></div>
+          <div class="form-buttons"><button type="submit" class="btn-primary">Criar Usuário</button></div>
+        </form>
+      </section>
+    </main>
   </div>
 
   <script src="/js/admin.js"></script>
