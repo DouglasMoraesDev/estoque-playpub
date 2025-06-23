@@ -1,49 +1,49 @@
-// prisma/seed.js
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
 
 const prisma = new PrismaClient();
 
 async function main() {
-  // Senhas padrão (texto puro)
-  const senhaAdmin = '250719'
-  const senhaFunc = 'func123';
+  // Cria ou garante existência dos estoques
+  for (const name of ['BarPlaypub', 'LojaPark']) {
+    await prisma.stock.upsert({
+      where: { name },
+      update: {},
+      create: { name },
+    });
+  }
 
-  // Hash das senhas
-  const hashAdmin = await bcrypt.hash(senhaAdmin, 10);
-  const hashFunc = await bcrypt.hash(senhaFunc, 10);
+  // Hash de senhas de exemplo
+  const hashAdmin = await bcrypt.hash('525210', 10);
+  const hashFunc  = await bcrypt.hash('525210', 10);
 
-  // Cria usuário ADMIN
-  const usuarioAdmin = await prisma.usuario.upsert({
-    where: { username: 'Vitoria' },
+  // Cria Admin vinculado a LojaPark
+  await prisma.usuario.upsert({
+    where: { username: 'admin' },
     update: {},
     create: {
-      username: 'Vitoria',
+      username: 'admin',
       password: hashAdmin,
-      role: 'ADMIN'
-    }
+      role: 'ADMIN',
+      stock: { connect: { name: 'LojaPark' } },
+    },
   });
 
-  // Cria usuário EMPLOYEE
-  const usuarioFunc = await prisma.usuario.upsert({
-    where: { username: 'funcionario' },
+  // Cria Funcionário vinculado a BarPlaypub
+  await prisma.usuario.upsert({
+    where: { username: 'Douglas' },
     update: {},
     create: {
       username: 'funcionario',
       password: hashFunc,
-      role: 'EMPLOYEE'
-    }
+      role: 'EMPLOYEE',
+      stock: { connect: { name: 'BarPlaypub' } },
+    },
   });
 
-  console.log('→ Usuários criados ou já existentes:');
-  console.log({ usuarioAdmin, usuarioFunc });
+  console.log('→ Seed concluído!');
 }
 
 main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+  .catch(e => { console.error(e); process.exit(1); })
+  .finally(async () => { await prisma.$disconnect(); });

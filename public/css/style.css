@@ -250,11 +250,11 @@ table tr:hover {
 
 /* Agrupa label e input na mesma linha, com label à esquerda e input à direita */
 .form-group {
+  position: relative; /* adicionada para posicionar corretamente o dropdown */
   display: flex;
   align-items: center;
   margin: 0.5rem 0;
-  width: 100%;            /* respeita largura máxima do form */
-  max-width: 500px;       /* limitar largura do grupo */
+  width: 100%;
 }
 
 /* Label com largura fixa e texto alinhado à direita */
@@ -284,15 +284,17 @@ table tr:hover {
 
 /* Listagem de resultados de busca (funcionário) */
 .search-results {
-  width: 100%;
-  max-width: 500px;
-  margin: 0.5rem auto;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
   border: 1px solid #ccc;
   border-radius: 4px;
   max-height: 200px;
   overflow-y: auto;
   background: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  z-index: 200;
 }
 
 .search-results .result-item {
@@ -332,8 +334,8 @@ table tr:hover {
   margin-bottom: 0.75rem;
 }
 
-/* ============================= */
-/* CARD LAYOUT para telas pequenas (apenas no admin) */
+/* =============================
+   CARD LAYOUT para telas pequenas (apenas no admin) */
 
 .cards-container {
   display: none;
@@ -367,7 +369,8 @@ table tr:hover {
 }
 
 .card-row span.value {
-  color: var(--texto-principal);
+  color: var(--texto-princi
+pal);
 }
 
 .card-actions {
@@ -401,8 +404,8 @@ table tr:hover {
   background-color: var(--dourado-escuro);
 }
 
-/* ============================= */
-/* Ajustes de responsividade – mobile */
+/* =============================
+   Ajustes de responsividade – mobile */
 
 @media (max-width: 768px) {
   .table-container {
@@ -455,6 +458,7 @@ table tr:hover {
   #cards-produtos,
   #cards-retiradas {
     display: flex;
+    /* Você pode usar grid aqui se quiser mais de 1 card/linha */
   }
 }
 

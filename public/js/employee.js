@@ -1,178 +1,128 @@
-const inputBuscaEstoque      = document.getElementById('input-busca-estoque');
-const resultsContainer       = document.getElementById('results-container');
-const produtoNomeDisplay     = document.getElementById('produto-nome-display');
-const produtoQtdeDisplay     = document.getElementById('produto-qtde-display');
-const produtoValidadeDisplay = document.getElementById('produto-validade-display');
-const qtdeRetirarInput       = document.getElementById('qtde-retirar');
-const formRetirar            = document.getElementById('form-retirar');
-const tabelaEstoqueBody      = document.querySelector('#tabela-estoque tbody');
-const sortableHeadersEmp     = document.querySelectorAll('#tabela-estoque th.sortable');
+const API_BASE = '/api';
 
-const API_BASE               = '/api';
+const empData = JSON.parse(document.getElementById('empStockData').textContent);
+const empStockId = empData.stockId;
+const destination = empData.destination;
+const userId = empData.userId;
+
+const formRetirar = document.getElementById('form-retirar');
+const inputBusca = document.getElementById('input-busca-estoque');
+const resultsContainer = document.getElementById('results-container');
+const produtoNome = document.getElementById('produto-nome-display');
+const produtoQtde = document.getElementById('produto-qtde-display');
+const produtoValidade = document.getElementById('produto-validade-display');
+const qtdeRetirar = document.getElementById('qtde-retirar');
+const destinoRetirada = document.getElementById('destino-retirada');
+const tabelaHistorico = document.querySelector('#tabela-historico-func tbody');
 
 let estoqueCache = [];
-let selectedProductId = null;
-let ordenacaoStateEmp = null;
+let selectedProduct = null;
+
+async function initEmp() {
+  destinoRetirada.value = destination;
+  await carregarEstoque();
+  await carregarHistoricoHoje();
+}
 
 async function carregarEstoque() {
   try {
-    const res = await fetch(`${API_BASE}/products`);
-    if (!res.ok) {
-      console.error('Erro ao buscar produtos:', res.statusText);
-      return;
-    }
-    const produtos = await res.json();
-    estoqueCache = produtos.slice();
-
-    tabelaEstoqueBody.innerHTML = '';
-    produtos.forEach((prod) => {
-      const dataVal = new Date(prod.validade).toLocaleDateString('pt-BR');
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${prod.id}</td>
-        <td>${prod.nome}</td>
-        <td>${prod.quantidade}</td>
-        <td>${dataVal}</td>
-      `;
-      tabelaEstoqueBody.appendChild(tr);
-    });
-
-    if (ordenacaoStateEmp) {
-      const { col, asc } = ordenacaoStateEmp;
-      const isNum = [0, 2].includes(col);
-      sortTable(tabelaEstoqueBody, col, isNum, asc);
-    }
+    const res = await fetch(`${API_BASE}/products?stockId=${empStockId}`);
+    estoqueCache = await res.json();
   } catch (err) {
-    console.error('Erro de rede ao carregar estoque:', err);
+    console.error('Erro ao carregar estoque:', err);
   }
 }
 
-inputBuscaEstoque.addEventListener('input', () => {
-  const termo = inputBuscaEstoque.value.trim().toLowerCase();
+inputBusca.addEventListener('input', () => {
+  const termo = inputBusca.value.trim().toLowerCase();
   if (!termo) {
     resultsContainer.style.display = 'none';
-    resultsContainer.innerHTML = '';
     return;
   }
-  const filtrados = estoqueCache.filter((p) =>
-    p.nome.toLowerCase().includes(termo)
-  );
-  if (filtrados.length === 0) {
-    resultsContainer.innerHTML = '<div class="result-item">Nenhum produto encontrado</div>';
-  } else {
-    resultsContainer.innerHTML = filtrados
-      .map(
-        (p) =>
-          `<div class="result-item" data-id="${p.id}">${p.nome} (Disponível: ${p.quantidade})</div>`
-      )
-      .join('');
-  }
+
+  const filtrados = estoqueCache.filter(p => p.nome.toLowerCase().includes(termo));
+  resultsContainer.innerHTML = filtrados.length
+    ? filtrados.map(p => `<div class="result-item" data-id="${p.id}">${p.nome} (${p.quantidade})</div>`).join('')
+    : '<div class="result-item">Nenhum encontrado</div>';
+
   resultsContainer.style.display = 'block';
 
-  document.querySelectorAll('.result-item').forEach((div) => {
+  document.querySelectorAll('.result-item').forEach(div => {
     div.addEventListener('click', () => {
-      const pid = div.dataset.id;
-      selecionarProduto(pid);
+      const id = Number(div.dataset.id);
+      const p = estoqueCache.find(x => x.id === id);
+      if (!p) return;
+
+      selectedProduct = p;
+      produtoNome.value = p.nome;
+      produtoQtde.value = p.quantidade;
+      produtoValidade.value = new Date(p.validade).toLocaleDateString('pt-BR');
+      resultsContainer.style.display = 'none';
     });
   });
 });
 
-function selecionarProduto(produtoId) {
-  const prod = estoqueCache.find((p) => p.id === Number(produtoId));
-  if (!prod) return;
-
-  selectedProductId = prod.id;
-  produtoNomeDisplay.value = prod.nome;
-  produtoQtdeDisplay.value = prod.quantidade;
-  produtoValidadeDisplay.value = new Date(prod.validade).toLocaleDateString('pt-BR');
-  resultsContainer.style.display = 'none';
-}
-
-function sortTable(tableBody, colIndex, isNum, asc) {
-  const rows = Array.from(tableBody.querySelectorAll('tr'));
-  rows.sort((a, b) => {
-    let va = a.children[colIndex].textContent.trim();
-    let vb = b.children[colIndex].textContent.trim();
-    if (isNum) {
-      return (parseFloat(va) - parseFloat(vb)) * (asc ? 1 : -1);
-    } else {
-      return va.localeCompare(vb) * (asc ? 1 : -1);
-    }
-  });
-  rows.forEach((tr) => tableBody.appendChild(tr));
-}
-
-sortableHeadersEmp.forEach((th) => {
-  const colIndex = parseInt(th.dataset.col, 10);
-  th.querySelector('.btn-sort').addEventListener('click', () => {
-    if (!ordenacaoStateEmp || ordenacaoStateEmp.col !== colIndex) {
-      ordenacaoStateEmp = { col: colIndex, asc: true };
-    } else {
-      ordenacaoStateEmp.asc = !ordenacaoStateEmp.asc;
-    }
-    sortTable(tabelaEstoqueBody, colIndex, [0,2].includes(colIndex), ordenacaoStateEmp.asc);
-  });
-});
-
-formRetirar.addEventListener('submit', async (e) => {
+formRetirar.addEventListener('submit', async e => {
   e.preventDefault();
-  if (!selectedProductId) {
-    alert('Selecione um produto antes de retirar.');
-    return;
-  }
-  const quantidadeDesejada = parseInt(qtdeRetirarInput.value, 10);
-  if (isNaN(quantidadeDesejada) || quantidadeDesejada <= 0) {
-    alert('Informe uma quantidade válida (maior que zero).');
-    return;
-  }
-  const destination = document.getElementById('destino-retirada').value;
-  if (!destination) {
-    alert('Selecione o destino da mercadoria.');
-    return;
-  }
-
-  const prodAtual = estoqueCache.find((p) => p.id === Number(selectedProductId));
-  if (!prodAtual) {
-    alert('Produto não encontrado no estoque.');
-    return;
-  }
-  if (prodAtual.quantidade < quantidadeDesejada) {
-    alert('Quantidade insuficiente em estoque.');
-    return;
-  }
+  if (!selectedProduct) return alert('Selecione um produto.');
+  const qty = parseInt(qtdeRetirar.value, 10);
+  if (isNaN(qty) || qty <= 0) return alert('Informe quantidade válida.');
 
   try {
-    const resRetirada = await fetch(`${API_BASE}/retiradas`, {
+    const res = await fetch(`${API_BASE}/retiradas`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        produtoId: prodAtual.id,
-        quantidade: quantidadeDesejada,
-        destination,
-      }),
+        productId: selectedProduct.id,
+        stockId: empStockId,
+        quantity: qty,
+        destination: destination
+      })
     });
-    if (!resRetirada.ok) {
-      const body = await resRetirada.json();
-      alert('Erro ao registrar retirada: ' + (body.error || resRetirada.statusText));
-      return;
-    }
+    const data = await res.json();
+    if (!res.ok) return alert(data.error || 'Erro ao registrar retirada.');
 
-    alert('Retirada registrada com sucesso!');
-    inputBuscaEstoque.value = '';
-    resultsContainer.style.display = 'none';
-    produtoNomeDisplay.value = '';
-    produtoQtdeDisplay.value = '';
-    produtoValidadeDisplay.value = '';
-    qtdeRetirarInput.value  = '';
-    selectedProductId = null;
+    // limpar campos
+    inputBusca.value = '';
+    produtoNome.value = '';
+    produtoQtde.value = '';
+    produtoValidade.value = '';
+    qtdeRetirar.value = '';
+    selectedProduct = null;
 
-    carregarEstoque();
+    await carregarEstoque();
+    await carregarHistoricoHoje();
   } catch (err) {
-    console.error('Erro de rede ao registrar retirada:', err);
-    alert('Falha de rede ao registrar retirada.');
+    console.error('Erro ao registrar retirada:', err);
   }
 });
 
-window.addEventListener('load', () => {
-  carregarEstoque();
-});
+async function carregarHistoricoHoje() {
+  const hoje = new Date().toISOString().split('T')[0];
+  try {
+    const res = await fetch(`${API_BASE}/my-retiradas?start=${hoje}&end=${hoje}`);
+    const lista = await res.json();
+    renderHistorico(lista);
+  } catch (err) {
+    console.error('Erro ao buscar retiradas:', err);
+  }
+}
+
+function renderHistorico(lista) {
+  tabelaHistorico.innerHTML = '';
+  lista.forEach(r => {
+    const dt = new Date(r.data);
+    const hora = dt.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    tabelaHistorico.innerHTML += `
+      <tr>
+        <td>${r.id}</td>
+        <td>${r.produtoNome}</td>
+        <td>${r.quantidade}</td>
+        <td>${r.destination}</td>
+        <td>${hora}</td>
+      </tr>
+    `;
+  });
+}
+
+window.addEventListener('load', initEmp);

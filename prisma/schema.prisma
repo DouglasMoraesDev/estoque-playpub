@@ -8,19 +8,39 @@ datasource db {
 }
 
 model Usuario {
-  id        Int        @id @default(autoincrement())
-  username  String     @unique
+  id        Int            @id @default(autoincrement())
+  username  String         @unique
   password  String
   role      Role
+  stock     Stock?         @relation(fields: [stockId], references: [id])
+  stockId   Int?
   retiradas Retirada[]
 }
 
 model Produto {
-  id         Int        @id @default(autoincrement())
-  nome       String
-  quantidade Int        @default(0)
-  validade   DateTime
-  retiradas  Retirada[]
+  id            Int             @id @default(autoincrement())
+  nome          String
+  validade      DateTime
+  productStocks ProductStock[]
+  retiradas     Retirada[]
+}
+
+model Stock {
+  id            Int             @id @default(autoincrement())
+  name          String          @unique    // "BarPlaypub" ou "LojaPark"
+  productStocks ProductStock[]
+  usuarios      Usuario[]
+}
+
+model ProductStock {
+  id         Int     @id @default(autoincrement())
+  produto    Produto @relation(fields: [produtoId], references: [id])
+  produtoId  Int
+  stock      Stock   @relation(fields: [stockId], references: [id])
+  stockId    Int
+  quantidade Int     @default(0)
+
+  @@unique([produtoId, stockId])
 }
 
 model Retirada {
@@ -29,7 +49,7 @@ model Retirada {
   usuarioId   Int
   quantidade  Int
   data        DateTime    @default(now())
-  destination Destination @default(LOJA_PARK)
+  destination Destination
   produto     Produto     @relation(fields: [produtoId], references: [id])
   usuario     Usuario     @relation(fields: [usuarioId], references: [id])
 

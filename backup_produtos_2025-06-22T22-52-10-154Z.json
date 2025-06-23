@@ -1,0 +1,176 @@
+[
+  {
+    "id": 6,
+    "nome": "Ginger LATA",
+    "quantidade": 48,
+    "validade": "2025-06-24T00:00:00.000Z"
+  },
+  {
+    "id": 7,
+    "nome": "WEISS LATA",
+    "quantidade": 27,
+    "validade": "2026-02-25T00:00:00.000Z"
+  },
+  {
+    "id": 8,
+    "nome": "RED ALE LATA",
+    "quantidade": 56,
+    "validade": "2025-09-25T00:00:00.000Z"
+  },
+  {
+    "id": 9,
+    "nome": "SOUR LATA",
+    "quantidade": 63,
+    "validade": "2026-04-26T00:00:00.000Z"
+  },
+  {
+    "id": 10,
+    "nome": "STOUT LATA",
+    "quantidade": 60,
+    "validade": "2026-03-28T00:00:00.000Z"
+  },
+  {
+    "id": 11,
+    "nome": "WINEBEER LATA",
+    "quantidade": 44,
+    "validade": "2025-12-27T00:00:00.000Z"
+  },
+  {
+    "id": 12,
+    "nome": "LAGER LATA",
+    "quantidade": 82,
+    "validade": "2026-02-24T00:00:00.000Z"
+  },
+  {
+    "id": 13,
+    "nome": "PINHÃO LATA",
+    "quantidade": 11,
+    "validade": "2026-04-23T00:00:00.000Z"
+  },
+  {
+    "id": 14,
+    "nome": "AVELÃ LATA",
+    "quantidade": 30,
+    "validade": "2026-04-25T00:00:00.000Z"
+  },
+  {
+    "id": 15,
+    "nome": "DUNKEL LATA",
+    "quantidade": 60,
+    "validade": "2025-06-26T00:00:00.000Z"
+  },
+  {
+    "id": 16,
+    "nome": "DARK ALE LATA",
+    "quantidade": 27,
+    "validade": "2026-02-22T00:00:00.000Z"
+  },
+  {
+    "id": 17,
+    "nome": "AMERICA IPA LATA",
+    "quantidade": 55,
+    "validade": "2026-04-27T00:00:00.000Z"
+  },
+  {
+    "id": 18,
+    "nome": "BOCK LATA",
+    "quantidade": 5,
+    "validade": "2024-12-30T00:00:00.000Z"
+  },
+  {
+    "id": 19,
+    "nome": "GINGER GARRAFA",
+    "quantidade": 98,
+    "validade": "2025-11-28T00:00:00.000Z"
+  },
+  {
+    "id": 20,
+    "nome": "WEISS GARRAFA",
+    "quantidade": 114,
+    "validade": "2026-04-28T00:00:00.000Z"
+  },
+  {
+    "id": 21,
+    "nome": "RED ALE GARRAFA",
+    "quantidade": 100,
+    "validade": "2026-04-28T00:00:00.000Z"
+  },
+  {
+    "id": 22,
+    "nome": "SOUR GARRAFA",
+    "quantidade": 89,
+    "validade": "2026-01-28T00:00:00.000Z"
+  },
+  {
+    "id": 23,
+    "nome": "STOUT GARRAFA",
+    "quantidade": 113,
+    "validade": "2026-04-27T00:00:00.000Z"
+  },
+  {
+    "id": 24,
+    "nome": "WINEBEER GARRAFA",
+    "quantidade": 82,
+    "validade": "2026-04-29T00:00:00.000Z"
+  },
+  {
+    "id": 25,
+    "nome": "LAGER GARRAFA",
+    "quantidade": 78,
+    "validade": "2026-01-29T00:00:00.000Z"
+  },
+  {
+    "id": 26,
+    "nome": "PINHÃO GARRAFA",
+    "quantidade": 68,
+    "validade": "2026-04-27T00:00:00.000Z"
+  },
+  {
+    "id": 27,
+    "nome": "AVELÃ GARRAFA",
+    "quantidade": 96,
+    "validade": "2026-02-23T00:00:00.000Z"
+  },
+  {
+    "id": 28,
+    "nome": "DUNKEL GARRAFA",
+    "quantidade": 108,
+    "validade": "2026-06-27T00:00:00.000Z"
+  },
+  {
+    "id": 29,
+    "nome": "DARK GARRAFA",
+    "quantidade": 112,
+    "validade": "2025-12-27T00:00:00.000Z"
+  },
+  {
+    "id": 30,
+    "nome": "AMERICA IPA GARRAFA",
+    "quantidade": 91,
+    "validade": "2026-04-25T00:00:00.000Z"
+  },
+  {
+    "id": 31,
+    "nome": "BOCK GARRAFA",
+    "quantidade": 113,
+    "validade": "2026-04-28T00:00:00.000Z"
+  },
+  {
+    "id": 32,
+    "nome": "GIN TONICA LATA",
+    "quantidade": 60,
+    "validade": "2026-04-29T00:00:00.000Z"
+  },
+  {
+    "id": 33,
+    "nome": "GIN CLASSICO GARRAFA",
+    "quantidade": 5,
+    "validade": "2025-12-01T00:00:00.000Z"
+  },
+  {
+    "id": 34,
+    "nome": "Gin citrus garrafa",
+    "quantidade": 4,
+    "validade": "2025-06-19T00:00:00.000Z"
+  }
+]
