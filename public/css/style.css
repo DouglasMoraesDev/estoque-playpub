@@ -252,6 +252,7 @@ table tr:hover { background-color: #f0f0f0; }
 
 /* Cards no modo administrador (mobile) */
 .cards-container {
+  color: var(--cinza-medio);
   display: flex;
   flex-direction: column;
   gap: var(--espacamento-padrao);
@@ -259,7 +260,7 @@ table tr:hover { background-color: #f0f0f0; }
 }
 
 .card {
-  background-color: #fff;
+  background-color: var(--verde-escuro);
   border-radius: var(--raio-padrao);
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
   padding: var(--espacamento-padrao);
@@ -267,7 +268,7 @@ table tr:hover { background-color: #f0f0f0; }
 
 .card-header {
   font-weight: 600;
-  color: var(--verde-escuro);
+  color: var(--cinza-medio);
   margin-bottom: 0.5rem;
 }
 
@@ -276,11 +277,13 @@ table tr:hover { background-color: #f0f0f0; }
   justify-content: space-between;
   margin-bottom: 0.5rem;
 }
-.card-row span.label { font-weight: 500; }
+.card-row span.label { font-weight: 500; 
+color: var(--cinza-medio);
+}
 
 .card-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: 5rem;
   margin-top: var(--espacamento-padrao);
 }
 .card-actions button {
