@@ -2,30 +2,57 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Administração do Estoque</title>
   <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    /* alinhamento responsivo do form de histórico */
+    .form-group-inline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    .form-group-inline input,
+    .form-group-inline button {
+      flex: 1 1 auto;
+      min-width: 120px;
+    }
+    @media (max-width: 480px) {
+      .form-group-inline {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <div class="logo-container">
       <img src="/img/logo.svg" alt="Logo PlayPub" class="logo" />
     </div>
+
     <header>
       <h1>Área do Gerente</h1>
       <div class="header-buttons">
         <button id="btn-loja" class="btn-secondary">LojaPark</button>
-        <button id="btn-bar"  class="btn-secondary">BarPlaypub</button>
+        <button id="btn-bar" class="btn-secondary">BarPlaypub</button>
         <button id="btn-historico" class="btn-secondary">Histórico</button>
-        <button id="btn-usuario"   class="btn-secondary">Cadastrar Usuário</button>
+        <button id="btn-usuario" class="btn-secondary">Cadastrar Usuário</button>
         <a href="/config" class="btn-secondary">Configurações</a>
         <a href="/logout" class="btn-logout">Logout</a>
       </div>
     </header>
 
     <main>
-      <!-- Seção de Produto -->
+      <!-- Seção Produtos -->
       <section id="sec-produto">
         <h2>Produtos</h2>
+        <button id="btn-toggle-view" class="btn-secondary" style="margin-bottom:1rem;">
+          Ver como cards
+        </button>
         <form id="form-add-produto" class="form-produto">
           <input type="hidden" id="produto-id" value="" />
           <div class="form-group"><label>Nome:</label><input id="nome-produto" required /></div>
@@ -34,7 +61,7 @@
           <div class="form-group"><label>Estoque:</label><select id="stockSelect"></select></div>
           <div class="form-buttons"><button type="submit" class="btn-primary">Salvar</button></div>
         </form>
-        <div class="table-container" style="margin-top:2rem;">
+        <div class="table-container" id="table-container">
           <table id="tabela-produtos">
             <thead>
               <tr><th>ID</th><th>Nome</th><th>Qtde</th><th>Validade</th><th>Ações</th></tr>
@@ -42,29 +69,34 @@
             <tbody></tbody>
           </table>
         </div>
+        <div id="cards-produtos" class="cards-container" style="display:none;"></div>
       </section>
 
-      <!-- Seção de Histórico -->
+      <!-- Seção Histórico -->
       <section id="sec-historico" style="display:none;">
         <h2>Histórico de Retiradas</h2>
-        <div class="form-group">
-          <label>Data Início:</label><input id="data-inicio" type="date" />
-          <label>Data Fim:</label><input id="data-fim" type="date" />
-          <label>Estoque:</label><select id="hist-stock-select"></select>
-          <button id="btn-gera-rel" class="btn-secondary">Ver Relatório</button>
-          <button id="btn-pdf" class="btn-primary">Gerar PDF</button>
+        <div class="form-group-inline">
+          <label for="data-inicio">Data:</label>
+          <input id="data-inicio" type="date" />
+          <button id="btn-gera-rel" class="btn-secondary">Buscar</button>
         </div>
         <div class="table-container">
           <table id="tabela-historico">
             <thead>
-              <tr><th>ID</th><th>Produto</th><th>Qtde</th><th>Funcionário</th><th>Data</th></tr>
+              <tr>
+                <th>Produto</th>
+                <th>Qtde</th>
+                <th>Usuário</th>
+                <th>Origem</th>
+                <th>Hora</th>
+              </tr>
             </thead>
             <tbody></tbody>
           </table>
         </div>
       </section>
 
-      <!-- Seção de Cadastro de Usuário -->
+      <!-- Seção Usuário -->
       <section id="sec-usuario" style="display:none;">
         <h2>Cadastrar Usuário</h2>
         <form id="form-add-usuario" class="form-produto">

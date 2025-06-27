@@ -1,8 +1,9 @@
-
+<!-- employee.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Área do Funcionário</title>
   <link rel="stylesheet" href="/css/style.css" />
 </head>
@@ -15,11 +16,7 @@
       <h1>Registrar Retirada</h1>
       <a href="/logout" class="btn-logout">Logout</a>
     </header>
-
-    <!-- placeholder para injeção de JSON pelo servidor -->
     <script id="empStockData" type="application/json"></script>
-
-    <!-- Formulário de Retirada -->
     <section id="seccao-retirada">
       <form id="form-retirar" class="form-retirada">
         <div class="form-group">
@@ -27,49 +24,26 @@
           <input type="text" id="input-busca-estoque" autocomplete="off" />
           <div id="results-container" class="search-results" style="display:none;"></div>
         </div>
-        <div class="form-group">
-          <label>Nome:</label>
-          <input type="text" id="produto-nome-display" readonly />
-        </div>
-        <div class="form-group">
-          <label>Disponível:</label>
-          <input type="text" id="produto-qtde-display" readonly />
-        </div>
-        <div class="form-group">
-          <label>Validade:</label>
-          <input type="text" id="produto-validade-display" readonly />
-        </div>
+        <div class="form-group"><label>Nome:</label><input type="text" id="produto-nome-display" readonly /></div>
+        <div class="form-group"><label>Disponível:</label><input type="text" id="produto-qtde-display" readonly /></div>
+        <div class="form-group"><label>Validade:</label><input type="text" id="produto-validade-display" readonly /></div>
         <input type="hidden" id="destino-retirada" />
-        <div class="form-group">
-          <label>Quantidade:</label>
-          <input type="number" id="qtde-retirar" min="1" required />
-        </div>
-        <div class="form-buttons">
-          <button type="submit" class="btn-primary">Retirar</button>
-        </div>
+        <div class="form-group"><label>Quantidade:</label><input type="number" id="qtde-retirar" min="1" required /></div>
+        <div class="form-buttons"><button type="submit" class="btn-primary">Retirar</button></div>
       </form>
     </section>
-
-    <!-- Histórico do dia -->
     <section id="seccao-historico">
       <h2>Meu Histórico (Hoje)</h2>
       <div class="table-container">
         <table id="tabela-historico-func">
           <thead>
-            <tr>
-              <th>ID</th>
-              <th>Produto</th>
-              <th>Qtde</th>
-              <th>Destino</th>
-              <th>Hora</th>
-            </tr>
+            <tr><th>ID</th><th>Produto</th><th>Qtde</th><th>Destino</th><th>Hora</th></tr>
           </thead>
           <tbody></tbody>
         </table>
       </div>
     </section>
   </div>
-
   <script src="/js/employee.js"></script>
 </body>
 </html>

@@ -1,7 +1,9 @@
+<!-- qrcode.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QR Code - Acesso Funcionário</title>
   <link rel="stylesheet" href="/css/style.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -9,21 +11,18 @@
 <body>
   <div class="container">
     <div class="logo-container">
-      <img src="img/logo.svg" alt="Logo PlayPub" class="logo" />
+      <img src="/img/logo.svg" alt="Logo PlayPub" class="logo" />
     </div>
-
     <h1>Escaneie para Acessar</h1>
     <div id="qrcode"></div>
     <p>Ou copie o link:</p>
     <input type="text" id="link-employee" readonly class="link-input" />
   </div>
-
   <script>
     const container = document.getElementById('qrcode');
     const linkInput = document.getElementById('link-employee');
     const urlEmployee = window.location.origin + '/employee';
     linkInput.value = urlEmployee;
-
     new QRCode(container, {
       text: urlEmployee,
       width: 220,

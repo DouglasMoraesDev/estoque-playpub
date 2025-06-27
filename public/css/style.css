@@ -4,14 +4,16 @@
 :root {
   --verde-escuro: #064c38;
   --verde-claro: #05612d;
-  --dourado: #05612d;
-  --dourado-escuro: #064c38;
-  --laranja: #e67e22;
-  --laranja-escuro: #d35400;
-  --cinza-claro: #f5f5f5;
+  --dourado: #064c38;
+  --dourado-escuro: #05612d;
+  --laranja: #064c38;
+  --laranja-escuro: #05612d;
+  --cinza-claro: #064c38;
   --cinza-medio: #eee;
   --cinza-escuro: #ddd;
   --texto-principal: #333;
+  --raio-padrao: 8px;
+  --espacamento-padrao: 1rem;
 }
 
 /* Reset e base */
@@ -30,468 +32,265 @@ html {
 
 body {
   line-height: 1.5;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: var(--espacamento-padrao);
 }
 
 /* Container centralizado */
 .container {
-  width: 90%;
+  width: 100%;
   max-width: 1000px;
-  margin: 20px auto;
+  margin: var(--espacamento-padrao) auto;
   background-color: #fff;
-  padding: 20px 30px;
-  border-radius: 12px;
+  padding: calc(var(--espacamento-padrao) * 1.5);
+  border-radius: var(--raio-padrao);
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Container específico para login (centralizar vertical) */
-.login-container {
-  max-width: 400px;
-  margin: 80px auto; /* empurra um pouco verticalmente */
-}
-
-/* Logo */
 .logo-container {
   background-color: var(--verde-escuro);
+  width: 100%;
   text-align: center;
-  padding: 20px 0;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
+  padding: var(--espacamento-padrao) 0;
+  border-top-left-radius: var(--raio-padrao);
+  border-top-right-radius: var(--raio-padrao);
 }
 .logo {
-  max-width: 180px;
+  max-width: 200px;
   height: auto;
 }
 
-/* Cabeçalhos */
 h1, h2, h3 {
   color: var(--verde-escuro);
-  margin-bottom: 16px;
+  margin: var(--espacamento-padrao) 0;
   text-align: center;
 }
+h1 { font-size: 1.75rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; }
 
-h1 {
-  font-size: 1.75rem;
-}
-
-h2 {
-  font-size: 1.5rem;
-}
-
-h3 {
-  font-size: 1.25rem;
-}
-
-/* Header com botões alinhados */
 header {
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+  gap: var(--espacamento-padrao);
+  margin-bottom: var(--espacamento-padrao);
 }
-.header-buttons a {
-  margin-left: 8px;
+.header-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+.header-buttons a,
+.header-buttons button {
   text-decoration: none;
-}
-.header-buttons .btn-secondary {
   background-color: var(--dourado);
   color: #fff;
-  padding: 8px 14px;
-  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  border-radius: var(--raio-padrao);
   font-size: 0.9rem;
   transition: background-color 0.2s;
+  border: none;
+  cursor: pointer;
 }
-.header-buttons .btn-secondary:hover {
+.header-buttons a.btn-logout,
+header .btn-logout {
+  background-color: var(--verde-escuro);
+}
+.header-buttons a.btn-logout:hover,
+header .btn-logout:hover {
+  background-color: var(--verde-claro);
+}
+.header-buttons a:hover,
+.header-buttons button:hover {
   background-color: var(--dourado-escuro);
 }
 
-/* Links de logout */
-.btn-logout {
-  text-decoration: none;
-  background-color: var(--verde-escuro);
-  color: #fff;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  transition: background-color 0.2s ease;
-}
-.btn-logout:hover {
-  background-color: var(--verde-claro);
+/* Formulários e seções */
+section {
+  width: 100%;
+  margin-bottom: var(--espacamento-padrao);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Formulários responsivos – grid base */
 form {
+  width: 100%;
+  max-width: 600px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 16px;
-  margin-bottom: 24px;
+  grid-template-columns: 1fr;
+  gap: var(--espacamento-padrao);
 }
 
-form label {
+.form-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form-group label {
+  margin-bottom: 0.25rem;
   font-weight: 500;
-  margin-bottom: 4px;
 }
 
-form input,
-form select,
-form button {
-  padding: 10px 12px;
+.form-group input,
+.form-group select,
+.form-group button {
+  padding: 0.75rem;
   font-size: 1rem;
   border: 1px solid var(--cinza-escuro);
-  border-radius: 6px;
-  transition: border-color 0.2s ease;
+  border-radius: var(--raio-padrao);
+  transition: border-color 0.2s;
 }
 
-form input:focus,
-form select:focus {
+.form-group input:focus,
+.form-group select:focus {
   outline: none;
-  border-color: var(--verde-escuro);
+  border-color: var(--verde-claro);
 }
 
-.form-login, .form-retirada, .form-produto, .form-config {
-  width: 100%;
+.form-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
 }
 
-.form-login input,
-.form-login button {
-  width: 100%;
-}
-
-/* Botões primários */
 .btn-primary {
   background-color: var(--verde-escuro);
   color: #fff;
   border: none;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--raio-padrao);
+  font-size: 1rem;
+  transition: background-color 0.2s;
 }
-.btn-primary:hover {
-  background-color: var(--verde-claro);
-}
+.btn-primary:hover { background-color: var(--verde-claro); }
 
-/* Botões secundários */
 .btn-secondary {
   background-color: var(--dourado);
   color: #fff;
   border: none;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--raio-padrao);
+  font-size: 1rem;
+  transition: background-color 0.2s;
 }
-.btn-secondary:hover {
-  background-color: var(--dourado-escuro);
-}
+.btn-secondary:hover { background-color: var(--dourado-escuro); }
 
-/* Botão cancelar edição */
-#btn-cancelar-edicao {
-  background-color: var(--laranja);
-}
-#btn-cancelar-edicao:hover {
-  background-color: var(--laranja-escuro);
-}
-
-/* Caixa de erro */
 .error {
   color: #d8000c;
-  margin-bottom: 12px;
   text-align: center;
   font-weight: 500;
 }
-
-/* Informações adicionais */
 .info {
-  margin-top: 16px;
+  margin-top: 0.5rem;
   text-align: center;
   font-size: 0.9rem;
 }
 
 /* Tabelas responsivas */
 .table-container {
+  width: 100%;
   overflow-x: auto;
-  margin-bottom: 30px;
+  margin-top: var(--espacamento-padrao);
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 600px;
+  min-width: 400px;
 }
 
 table th,
 table td {
-  padding: 12px 14px;
+  padding: 0.75rem 1rem;
   border: 1px solid var(--cinza-escuro);
   text-align: left;
   font-size: 0.95rem;
 }
 
-table th {
-  background-color: var(--cinza-medio);
-  font-weight: 600;
+table th { background-color: var(--cinza-medio); font-weight: 600; }
+
+table tr:nth-child(even) { background-color: #fafafa; }
+
+table tr:hover { background-color: #f0f0f0; }
+
+/* Mobile first: ampla responsividade */
+@media (min-width: 600px) {
+  form {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-table tr:nth-child(even) {
-  background-color: #fafafa;
+@media (min-width: 900px) {
+  form {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
-table tr:hover {
-  background-color: #f0f0f0;
-}
-
-/* ===========================
-   Estilos para formulários (alinhamento)
-   =========================== */
-
-/* Container que centraliza o formulário na tela */
-.form-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 1rem 0;
-}
-
-/* Agrupa label e input na mesma linha, com label à esquerda e input à direita */
-.form-group {
-  position: relative; /* adicionada para posicionar corretamente o dropdown */
-  display: flex;
-  align-items: center;
-  margin: 0.5rem 0;
+/* Ajustes específicos de QR e inputs link */
+.link-input {
   width: 100%;
-}
-
-/* Label com largura fixa e texto alinhado à direita */
-.form-group label {
-  width: 120px;
-  text-align: right;
-  margin-right: 0.5rem;
-  font-weight: 500;
-}
-
-/* Input / Select dentro do grupo ocupa o restante do espaço */
-.form-group input,
-.form-group select {
-  flex: 1;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-/* Container para os botões de ação (Salvar, Cancelar, Retirar) */
-.form-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-/* Listagem de resultados de busca (funcionário) */
-.search-results {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  right: 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  max-height: 200px;
-  overflow-y: auto;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  z-index: 200;
-}
-
-.search-results .result-item {
-  padding: 0.5rem;
-  cursor: pointer;
-  border-bottom: 1px solid var(--cinza-escuro);
-}
-
-.search-results .result-item:last-child {
-  border-bottom: none;
-}
-
-.search-results .result-item:hover {
-  background-color: #f0f0f0;
-}
-
-/* Caixa de alertas (no admin), com borda e fundo levemente destacado */
-.alert-box {
-  border: 1px solid #e74c3c;
-  background-color: #fdecea;
+  max-width: 400px;
   padding: 0.75rem;
-  border-radius: 4px;
-  max-width: 600px;
-  margin: 0 auto 1rem;
+  border: 1px solid var(--cinza-escuro);
+  border-radius: var(--raio-padrao);
+  margin-top: 0.5rem;
+  text-align: center;
 }
 
-.alert-box h3 {
-  margin: 0.25rem 0;
-  color: #c0392b;
-}
-
-.alert-box ul {
-  margin: 0.5rem 0 0 1.5rem;
-}
-
-.alert-section {
-  margin-bottom: 0.75rem;
-}
-
-/* =============================
-   CARD LAYOUT para telas pequenas (apenas no admin) */
-
+/* Cards no modo administrador (mobile) */
 .cards-container {
-  display: none;
+  display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-top: 16px;
+  gap: var(--espacamento-padrao);
+  width: 100%;
 }
 
 .card {
   background-color: #fff;
-  border-radius: 8px;
+  border-radius: var(--raio-padrao);
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
-  padding: 16px;
+  padding: var(--espacamento-padrao);
 }
 
 .card-header {
   font-weight: 600;
   color: var(--verde-escuro);
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 }
 
 .card-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 6px;
+  margin-bottom: 0.5rem;
 }
-
-.card-row span.label {
-  font-weight: 500;
-  color: var(--texto-principal);
-}
-
-.card-row span.value {
-  color: var(--texto-princi
-pal);
-}
+.card-row span.label { font-weight: 500; }
 
 .card-actions {
-  margin-top: 12px;
   display: flex;
-  gap: 8px;
+  gap: 0.5rem;
+  margin-top: var(--espacamento-padrao);
 }
-
 .card-actions button {
   flex: 1;
-  padding: 8px 12px;
-  font-size: 0.9rem;
+  padding: 0.75rem;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--raio-padrao);
   cursor: pointer;
 }
-
-.card-actions .btn-edit {
-  background-color: var(--verde-escuro);
-  color: #fff;
-}
-.card-actions .btn-edit:hover {
-  background-color: var(--verde-claro);
-}
-
-.card-actions .btn-delete {
-  background-color: var(--dourado);
-  color: #fff;
-}
-.card-actions .btn-delete:hover {
-  background-color: var(--dourado-escuro);
-}
-
-/* =============================
-   Ajustes de responsividade – mobile */
-
-@media (max-width: 768px) {
-  .table-container {
-    overflow-x: auto;
-  }
-
-  #tabela-estoque {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  #tabela-estoque th,
-  #tabela-estoque td {
-    font-size: 0.85rem;
-    padding: 6px 8px;
-    white-space: nowrap;
-  }
-
-  .container {
-    padding: 12px 16px;
-  }
-
-  h2 {
-    font-size: 1.25rem;
-  }
-
-  form {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .btn-logout {
-    padding: 6px 12px;
-    font-size: 0.85rem;
-  }
-
-  table th,
-  table td {
-    padding: 10px 8px;
-    font-size: 0.9rem;
-  }
-
-  /* Esconde tabelas e mostra cards no admin */
-  .tabela-produtos-container,
-  .tabela-retiradas-container,
-  .tabela-relatorio-estoque,
-  .tabela-relatorio-retiradas {
-    display: none;
-  }
-  #cards-produtos,
-  #cards-retiradas {
-    display: flex;
-    /* Você pode usar grid aqui se quiser mais de 1 card/linha */
-  }
-}
-
-@media (max-width: 480px) {
-  .container {
-    width: 95%;
-    margin: 12px auto;
-    padding: 12px 16px;
-  }
-
-  h1 {
-    font-size: 1.25rem;
-  }
-
-  h2 {
-    font-size: 1.1rem;
-  }
-
-  form input,
-  form select,
-  form button {
-    padding: 8px 10px;
-    font-size: 0.95rem;
-  }
-
-  .btn-logout {
-    padding: 4px 8px;
-    font-size: 0.8rem;
-  }
-
-  table th,
-  table td {
-    padding: 8px 6px;
-    font-size: 0.85rem;
-  }
-}
+.card-actions .btn-edit { background-color: var(--verde-escuro); color: #fff; }
+.card-actions .btn-edit:hover { background-color: var(--verde-claro); }
+.card-actions .btn-delete { background-color: var(--dourado); color: #fff; }
+.card-actions .btn-delete:hover { background-color: var(--dourado-escuro); }

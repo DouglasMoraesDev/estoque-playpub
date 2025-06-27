@@ -1,7 +1,9 @@
+<!-- config.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Configurações – Trocar Senha</title>
   <link rel="stylesheet" href="/css/style.css" />
 </head>
@@ -17,33 +19,25 @@
         <a href="/logout" class="btn-logout">Logout</a>
       </div>
     </header>
-
-    <!-- Seção Trocar Senha -->
     <section id="seccao-config">
       <h2>Trocar Senha</h2>
       <form id="form-trocar-senha" class="form-config">
         <label for="current-password">Senha Atual:</label>
         <input type="password" id="current-password" required />
-
         <label for="new-password">Nova Senha:</label>
         <input type="password" id="new-password" minlength="6" required />
-
         <label for="confirm-password">Confirmar Nova Senha:</label>
         <input type="password" id="confirm-password" minlength="6" required />
-
         <button type="submit" class="btn-primary">Alterar Senha</button>
       </form>
       <div id="config-feedback" class="error"></div>
     </section>
-
-    <!-- Nova Seção: Backup de Produtos -->
     <section id="seccao-backup" style="margin-top: 2rem;">
       <h2>Backup</h2>
       <p>Clique no botão abaixo para gerar um arquivo JSON com todos os produtos atuais.</p>
       <button id="btn-backup" class="btn-primary">Fazer Backup de Produtos</button>
     </section>
   </div>
-
   <script src="/js/config.js"></script>
 </body>
 </html>
