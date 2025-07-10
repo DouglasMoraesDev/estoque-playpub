@@ -1,0 +1,21 @@
+{
+  "name": "PlayPub Estoque",
+  "short_name": "PlayPub",
+  "description": "Gerenciamento de estoque para LojaPark e BarPlaypub",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#064c38",
+  "icons": [
+    {
+      "src": "/img/playpub512.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

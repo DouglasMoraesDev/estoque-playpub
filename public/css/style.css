@@ -297,3 +297,69 @@ color: var(--cinza-medio);
 .card-actions .btn-edit:hover { background-color: var(--verde-claro); }
 .card-actions .btn-delete { background-color: var(--dourado); color: #fff; }
 .card-actions .btn-delete:hover { background-color: var(--dourado-escuro); }
+
+  footer {
+    text-align: center;
+    padding: 1rem 0;
+    background: var(--footer-bg);
+    color: var(--footer-text);
+    z-index: 50;
+  }
+
+
+
+
+
+
+
+
+
+
+/* Dashboard */
+.dashboard-section {
+  width: 100%;
+}
+@media (min-width: 1200px) {
+  /* Em telas grandes, deixa o dashboard um pouco mais largo */
+  .dashboard-section {
+    max-width: 1200px;
+    margin: 0 auto 2rem;
+  }
+}
+
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--espacamento-padrao);
+  margin-bottom: var(--espacamento-padrao);
+}
+.card-info {
+  background-color: var(--verde-claro);
+  color: #fff;
+  padding: var(--espacamento-padrao);
+  border-radius: var(--raio-padrao);
+  text-align: center;
+}
+.lowstock-list-container,
+.vencendo-list-container {
+  background-color: var(--verde-claro);
+  color: #fff;
+  padding: var(--espacamento-padrao);
+  border-radius: var(--raio-padrao);
+  text-align: left;
+  max-height: 150px;
+  overflow-y: auto;
+}
+.lowstock-list-container ul,
+.vencendo-list-container ul {
+  margin-top: 0.5rem;
+  padding-left: 1.2rem;
+}
+
+/* Cards sempre visíveis */
+.cards-container {
+  display: flex !important;
+  flex-direction: column;
+  gap: var(--espacamento-padrao);
+}

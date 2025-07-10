@@ -1,32 +1,12 @@
+<!-- public/admin.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
   <title>Administração do Estoque</title>
   <link rel="stylesheet" href="/css/style.css" />
-  <style>
-    /* alinhamento responsivo do form de histórico */
-    .form-group-inline {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-bottom: 1rem;
-    }
-    .form-group-inline input,
-    .form-group-inline button {
-      flex: 1 1 auto;
-      min-width: 120px;
-    }
-    @media (max-width: 480px) {
-      .form-group-inline {
-        flex-direction: column;
-        align-items: stretch;
-      }
-    }
-  </style>
 </head>
 <body>
   <div class="container">
@@ -37,6 +17,7 @@
     <header>
       <h1>Área do Gerente</h1>
       <div class="header-buttons">
+        <button id="btn-dashboard" class="btn-secondary">Dashboard</button>
         <button id="btn-loja" class="btn-secondary">LojaPark</button>
         <button id="btn-bar" class="btn-secondary">BarPlaypub</button>
         <button id="btn-historico" class="btn-secondary">Histórico</button>
@@ -47,29 +28,48 @@
     </header>
 
     <main>
+      <!-- Dashboard -->
+      <section id="sec-dashboard" class="dashboard-section" style="display:none;">
+        <h2>Resumo Diário</h2>
+        <div class="dashboard-grid">
+          <div class="card-info"><strong>Retiradas hoje:</strong> <span id="dash-retiradas"></span></div>
+          
+          <div class="card-info"><strong>Quase vencendo (5d):</strong> <span id="dash-vencendo-count"></span></div>
+          <div class="card-info vencendo-list-container">
+            <strong>Produtos quase vencendo:</strong>
+            <ul id="dash-vencendo-list"></ul>
+          </div>
+          
+          <div class="card-info"><strong>Estoque abaixo de ( 5 unidades ):</strong> <span id="dash-lowstock-count"></span>
+            <div class="card-info lowstock-list-container">
+            <strong></strong>
+            <ul id="dash-lowstock-list"></ul>
+          </div>
+          
+          </div>
+
+          
+          <div class="card-info"><strong>Total de produtos em LojaPark:</strong> <span id="dash-total-loja"></span></div>
+          <div class="card-info"><strong>Total de produtos em BarPlaypub:</strong> <span id="dash-total-bar"></span></div>
+        </div>
+      </section>
+
       <!-- Seção Produtos -->
-      <section id="sec-produto">
+      <section id="sec-produto" style="display:none;">
         <h2>Produtos</h2>
-        <button id="btn-toggle-view" class="btn-secondary" style="margin-bottom:1rem;">
-          Ver como cards
-        </button>
+        <div class="form-group-inline">
+          <input id="search-produto" placeholder="🔍 Buscar produto..." />
+        </div>
         <form id="form-add-produto" class="form-produto">
           <input type="hidden" id="produto-id" value="" />
           <div class="form-group"><label>Nome:</label><input id="nome-produto" required /></div>
-          <div class="form-group"><label>Quantidade:</label><input id="qtde-produto" type="number" min="0" required /></div>
+          <div class="form-group"><label>Quantidade atual:</label><input id="qtde-produto" type="number" min="0" /></div>
+          <div class="form-group"><label>Adicionar qtde:</label><input id="add-qtde-produto" type="number" min="0" value="0" style="display:none;" /></div>
           <div class="form-group"><label>Validade:</label><input id="validade-produto" type="date" required /></div>
           <div class="form-group"><label>Estoque:</label><select id="stockSelect"></select></div>
           <div class="form-buttons"><button type="submit" class="btn-primary">Salvar</button></div>
         </form>
-        <div class="table-container" id="table-container">
-          <table id="tabela-produtos">
-            <thead>
-              <tr><th>ID</th><th>Nome</th><th>Qtde</th><th>Validade</th><th>Ações</th></tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-        <div id="cards-produtos" class="cards-container" style="display:none;"></div>
+        <div id="cards-produtos" class="cards-container"></div>
       </section>
 
       <!-- Seção Histórico -->
@@ -84,11 +84,7 @@
           <table id="tabela-historico">
             <thead>
               <tr>
-                <th>Produto</th>
-                <th>Qtde</th>
-                <th>Usuário</th>
-                <th>Origem</th>
-                <th>Hora</th>
+                <th>Produto</th><th>Qtde</th><th>Usuário</th><th>Origem</th><th>Hora</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -115,6 +111,7 @@
       </section>
     </main>
   </div>
+
 
   <script src="/js/admin.js"></script>
 </body>
